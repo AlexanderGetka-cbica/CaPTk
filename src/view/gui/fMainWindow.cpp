@@ -242,6 +242,7 @@ fMainWindow::fMainWindow()
 
   m_toolTabdock = new CaPTkDockWidget(this); // custom class to propagate drag-and-drop events to the main window
   m_toolTabdock->setWindowFlags(Qt::Widget); // SubWindow allows it to be shown while MainWindow is also visible
+  connect(this, SIGNAL(visibilityChanged(QWindow::Visibility)), m_toolTabdock, SLOT(setVisibility(QWindow::Visibility)));
 
   m_tabWidget = new QTabWidget(m_toolTabdock);
   infoPanel = new fBottomImageInfoTip(centralwidget);
