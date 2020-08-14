@@ -686,7 +686,7 @@ IF( NOT EXISTS "${DOWNLOADED_APPS_DIR}" )
 	  MESSAGE( STATUS "Extraction succeeded. Now copying to ${SOURCE_APPLICATIONS_PATH}/dcm2niix")
 	  FILE(GLOB allFiles ${PROJECT_BINARY_DIR}/dcm2niix/dcm2niix_${PLATFORM_STRING}/*.* )
 	  
-	  MESSAGE(${allFiles})
+	  MESSAGE( STATUS ${allFiles} )
 #Copy
 	  FILE( COPY ${allFiles} 
 		DESTINATION ${SOURCE_APPLICATIONS_PATH}/dcm2niix )
