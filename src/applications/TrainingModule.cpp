@@ -18,6 +18,7 @@ See COPYING file or https://www.med.upenn.edu/cbica/captk/license.html
 #include "opencv2/ml.hpp"
 #include <cmath>
 #include "CaPTkUtils.h"
+//#include "MatrixZScoring.h"
 
 bool TrainingModule::CheckPerformanceStatus(double ist, double second, double third, double fourth, double fifth, double sixth, double seventh, double eighth, double ninth, double tenth)
 {
@@ -1643,12 +1644,40 @@ bool TrainingModule::TrainData2(const VariableSizeMatrixType inputFeatures,
   const VariableLengthVectorType inputLabels,
   const TrainingModuleParameters& params)
 {
+
   //scaling of the given features
   //---------------------------
   std::cout << "Scaling started..." << std::endl;
   FeatureScalingClass mFeaturesScaling;
   VariableSizeMatrixType scaledFeatureSet;
   VariableLengthVectorType meanVector, stdVector;
+
+  /*
+  //calculate new-method z-scores (DELETE THIS)
+  cv::Mat matEquivalent = cv::Mat::zeros(inputFeatures.Rows(), inputFeatures.Cols(), CV_64F);
+  for (int i = 0; i < inputFeatures.Rows(); i++)
+  {
+      for (int j = 0; j < inputFeatures.Cols(); j++)
+      {
+          matEquivalent.at<double>(i, j) = inputFeatures[i][j];
+      }
+  }
+  cv::Mat scored = cv::Mat::zeros(inputFeatures.Rows(), inputFeatures.Cols(), CV_64F);
+  ZScoring::ZScoreNormalizeByColumns(matEquivalent, scored); // fill scored
+  scaledFeatureSet.SetSize(inputFeatures.Rows(), inputFeatures.Cols());
+  for (int i = 0; i < inputFeatures.Rows(); i++)
+  {
+      for (int j = 0; j < inputFeatures.Cols(); j++)
+      {
+          double tmp = scored.at<double>(i, j);
+          scaledFeatureSet[i][j] = tmp;
+      }
+  }
+  WriteCSVFiles(scaledFeatureSet, params.outputDirectory + "/NEW_scaled_feature_set.csv");
+
+  // END NEW SECTION
+  */
+
   mFeaturesScaling.ScaleGivenTrainingFeatures(inputFeatures, scaledFeatureSet, meanVector, stdVector);
 
   //remove the nan values introduced after the scaling process
